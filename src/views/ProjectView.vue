@@ -27,13 +27,13 @@
           (X-ISC)
         </h4>
         
-        <div class="author-info">
+        <!-- <div class="author-info">
           <span>Anonymous submission</span>
-        </div>
+        </div> -->
   
         <!-- 添加 GitHub 链接按钮 -->
         <div class="github-link-container">
-          <a href="https://anonymous.4open.science/r/SC-15FB/" 
+          <a href="https://github.com/qingjiesjtu/USC" 
              class="github-button"
              target="_blank">
             <i class="github-icon">
@@ -439,7 +439,7 @@
                   Access our code repository through the following links:
                 </p>
                 <ul>
-                  <li><a href="https://anonymous.4open.science/r/SC-15FB/" target="_blank">Project Code</a></li>
+                  <li><a href="https://github.com/qingjiesjtu/USC" target="_blank">Project Code</a></li>
                 </ul>
               </div>
             </div>
