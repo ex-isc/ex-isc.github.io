@@ -47,14 +47,14 @@
       </div>
       <div class="container main-content">
         <el-row justify="center">
-          <el-col :span="20"> 
+          <el-col :xs="22" :sm="22" :md="20" :lg="20" :xl="20"> 
             <h3 class="section">
               <span class="section-title">A first quick glance: ChatGPT o1 pro mode example</span>
             </h3>
             <div class="section-content">
               <h3 class="quick-glance-question">Question: "Is Earth flat?"</h3>
               <el-row :gutter="20">
-                <el-col :span="12">
+                <el-col :xs="24" :sm="24" :md="12">
                   <div class="quick-glance-video">
                     <video 
                       :src="videoO1Pro"
@@ -66,7 +66,7 @@
                     </div>
                   </div>
                 </el-col>
-                <el-col :span="12">
+                <el-col :xs="24" :sm="24" :md="12">
                   <div class="quick-glance-image">
                     <img 
                       src="@/figures/o1-pro-log.png" 
@@ -86,7 +86,7 @@
       </div>
       <div class="container main-content">
         <el-row justify="center">
-          <el-col :span="20">
+          <el-col :xs="22" :sm="22" :md="20" :lg="20" :xl="20">
             <h3 class="video-section-title">
               <span class="section-title">A second quick glance for the extremely simple questions on other GPTs</span>
             </h3>
@@ -94,8 +94,8 @@
         </el-row>
       </div>
 
-      <!-- After github-link-container div and before main-content div -->
-      <div class="video-section">
+      <!-- Desktop Video Section -->
+      <div class="video-section desktop-only">
         <el-row :gutter="10">
           <el-col :span="1"></el-col>
           <el-col :span="7">
@@ -131,31 +131,84 @@
           </el-col>
         </el-row>
       </div>
+
+      <!-- Mobile Video Section -->
+      <div class="mobile-video-section mobile-only">
+        <div class="mobile-video-card">
+          <!-- Model Selector Dropdown -->
+          <div class="mobile-selector-wrapper" :class="{ 'selector-expanded': mobileActiveNames.includes('1') }">
+            <el-collapse v-model="mobileActiveNames">
+              <el-collapse-item name="1">
+                <template #title>
+                  <div class="mobile-selector-header">
+                    <span class="mobile-selector-title">{{ selectedMobileModel?.label || 'Select Model' }}</span>
+                    <span class="mobile-selector-hint" v-if="!mobileActiveNames.includes('1')">Tap to select</span>
+                  </div>
+                </template>
+                <div class="mobile-model-list">
+                  <div 
+                    v-for="model in mobileModelOptions" 
+                    :key="model.value"
+                    class="mobile-model-item"
+                    :class="{ active: selectedMobileModel?.value === model.value }"
+                    @click="selectMobileModel(model)"
+                  >
+                    {{ model.label }}
+                  </div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
+
+          <div class="mobile-video-content">
+            <!-- Question Display -->
+            <div class="mobile-question-display" :class="{ 'has-question': selectedMobileModel }">
+              <div class="mobile-question-text">
+                {{ selectedMobileModel ? selectedMobileModel.question : 'Select a model to view the question' }}
+              </div>
+            </div>
+
+            <!-- Video Player -->
+            <div class="mobile-video-player">
+              <video 
+                :src="currentMobileVideoSrc" 
+                controls 
+                class="mobile-demo-video"
+                v-if="currentMobileVideoSrc"
+              >
+                Your browser does not support the video tag.
+              </video>
+              <div v-else class="video-placeholder">
+                Select a model to view the demo
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   
       <!-- Main Content -->
       <div class="container main-content">
         <el-row justify="center">
-          <el-col :span="20">
+          <el-col :xs="22" :sm="22" :md="20" :lg="20" :xl="20">
             <!-- Abstract Section -->
             <div class="section" id="abstract">
               <h3>
                 <span class="section-title">Abstract</span>
               </h3>
               <div class="section-content">
-                <el-row :gutter="20">
-                    <el-col :span="1"></el-col>
-                  <el-col :span="11">
+                <el-row :gutter="20" class="abstract-row">
+                  <el-col :xs="24" :sm="24" :md="12" class="abstract-col">
                     <p>
                       Intrinsic self-correction was proposed to improve LLMs' responses via feedback solely based on their inherent capability. However, recent works show that LLMs' intrinsic self-correction fails without oracle labels as feedback. In this paper, we aim to interpret LLMs' intrinsic self-correction for different tasks, especially for those failure cases? By including one simple task and three complex tasks with state-of-the-art (SOTA) LLMs like ChatGPT families (o1, 4o, 3.5-turbo) and Llama families (2-7B, 3-8B, and 3.1-8B), we design interpretation methods to reveal the dark side of SOTA LLMs' intrinsic self-correction. We identify intrinsic self-correction can (1) cause LLMs to waver both intermedia and final answers and lead to prompt bias on simple factual questions; (2) introduce human-like cognitive bias on complex tasks. In light of our findings, we also provide two simple, low-cost, yet effective strategies for alleviation: question repeating and supervised fine-tuning.
                     </p>
                   </el-col>
-                <el-col :span="10">
+                  <el-col :xs="24" :sm="24" :md="12" class="abstract-col">
                     <img 
-                        src="@/figures/overviewf3.png" 
-                        alt="Overview" 
-                        class="responsive-image abstract-image"
+                      src="@/figures/overviewf3.png" 
+                      alt="Overview" 
+                      class="responsive-image abstract-image"
                     />
-                    </el-col>
+                  </el-col>
                 </el-row>
               </div>
             </div>
@@ -218,7 +271,7 @@
                 <!-- Method 1: Mechanistic Interpretability -->
                 <div class="method-box">
                   <el-row :gutter="20">
-                    <el-col :span="12">
+                    <el-col :xs="24" :sm="24" :md="12">
                       <h4>1. Internal answer wavering</h4>
                       <p>
                         We analyze LLMs' internal token representations at each layer to track how confidence in different answers evolves. Our findings show that:
@@ -228,7 +281,7 @@
                         <li>Prompting with "Are you sure?" produces nearly identical confidence patterns as directly stating "You are wrong"</li>
                       </ul>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :xs="24" :sm="24" :md="12">
                       <img 
                         src="@/figures/internal_confidence.png" 
                         alt="Internal Confidence Analysis" 
@@ -244,7 +297,7 @@
                 <!-- Method 2: Token Attribution -->
                 <div class="method-box">
                   <el-row :gutter="20">
-                    <el-col :span="11">
+                    <el-col :xs="24" :sm="24" :md="11">
                       <h4>2. Token attribution analysis: Prompt bias</h4>
                       <p>
                         Using our PACT (Prompt Attribution and Contribution Tracking) method, we measure how different parts of the input influence the model's decisions:
@@ -254,8 +307,7 @@
                         <li>When correct answers are retained, models maintain focus on the original question</li>
                       </ul>
                     </el-col>
-                    <el-col :span="1"></el-col>
-                    <el-col :span="11">
+                    <el-col :xs="24" :sm="24" :md="1">
                       <img 
                         src="@/figures/case.png" 
                         alt="Token Attribution Analysis" 
@@ -271,7 +323,7 @@
                 <!-- Method 3: Human-like Cognitive Bias -->
                 <div class="method-box">
                   <el-row :gutter="20">
-                    <el-col :span="11">
+                    <el-col :xs="24" :sm="24" :md="11">
                       <h4>3. Human-like cognitive bias analysis</h4>
                       <p>
                         In complex tasks, we identify three types of human-like cognitive biases that emerge during self-correction:
@@ -282,7 +334,7 @@
                         <li><strong>Perfectionism Bias:</strong> Over-optimization leading to constraint violations</li>
                       </ul>
                     </el-col>
-                    <el-col :span="13">
+                    <el-col :xs="24" :sm="24" :md="13">
                       <img 
                         src="@/figures/humanCognitiveBiasf.png" 
                         alt="Human Cognitive Biases" 
@@ -307,7 +359,7 @@
                   Based on our findings that self-correction failures are mainly due to model's behavior of changing answers when meeting refinement prompts, we propose two simple yet effective strategies:
                 </p>
                 <div style="text-align: center;">
-                  <img src="@/figures/mergedMitigation2.png" alt="Question Repeating" class="responsive-image" style="width: 80%;" />
+                  <img src="@/figures/mergedMitigation2.png" alt="Question Repeating" class="responsive-image" />
                 </div>
   
                 <!-- Mitigation Strategy 1: Question Repeating -->
@@ -664,6 +716,29 @@
     const option = videoOptions.find(opt => opt.value === selectedVideo.value);
     return option ? option.src : '';
   });
+
+  // Mobile-specific state
+  const mobileActiveNames = ref([])
+  const selectedMobileModel = ref<any>(videoOptions[0])
+
+  // Mobile model options (simplified version of videoOptions)
+  const mobileModelOptions = computed(() => videoOptions.map(opt => ({
+    value: opt.value,
+    label: opt.model.split(' (')[0], // Only show model name without date
+    question: opt.question,
+    src: opt.src
+  })))
+
+  // Mobile video source
+  const currentMobileVideoSrc = computed(() => 
+    selectedMobileModel.value ? selectedMobileModel.value.src : ''
+  )
+
+  // Function to handle mobile model selection
+  const selectMobileModel = (model: any) => {
+    selectedMobileModel.value = model
+    mobileActiveNames.value = [] // Close the collapse after selection
+  }
   </script>
   
   <style scoped>
@@ -769,7 +844,7 @@
     margin: 15px 0;
   }
   
-  /* 为双栏布局加响应式设计 */
+  /* 为栏布局加响应式设计 */
   @media (max-width: 768px) {
     .finding-item, .method-item, .result-item, .solution-item {
       padding: 15px;
@@ -857,7 +932,7 @@
   
   /* 添加新的样式类用于中等大小的图片 */
   .medium-image {
-    width: 70%;  /* 设置为容器宽度的70% */
+    width: 70%;  /* 设置为容器宽度70% */
     display: block;
     margin: 15px auto;  /* 上下间距15px，左右自动居中 */
   }
@@ -1046,12 +1121,12 @@
     border-bottom: 2px solid #999 !important;
   }
   
-  /* 表格1 - 移除内容行的横线但保留表头边框 */
+  /* 表格1 - 移除内容行的横线但保留表头框 */
   #boolq-table :deep(.el-table__row) td {
     border-bottom: none !important;
   }
 
-  /* 表格2 - 移除内容行的横线，只在特定行添加边框 */
+  /* 表格2 - 移除内容行的横线，只在特定行加边框 */
   #mitigate-table :deep(.el-table__row) td {
     border-bottom: none !important;
   }
@@ -1081,11 +1156,11 @@
   :deep(.el-table__header-wrapper th.el-table__cell) {
     background-color: #f5f5f5 !important;  /* 浅灰色背景 */
     border-bottom: 2px solid #999 !important;
-    color: #666 !important;  /* 更浅的文字颜色 */
+    color: #666 !important;  /* 浅的文字颜色 */
     font-weight: 600 !important;  /* 稍微加粗字体 */
   }
   
-  /* 确保表头文字不会被背景色影响 */
+  /* 确保表头文字不会被背景影响 */
   :deep(.el-table__header-wrapper th.el-table__cell > .cell) {
     color: #666 !important;
   }
@@ -1095,30 +1170,13 @@
     margin-top: 40px;
   }
   
-  .video-container, .image-container {
-    width: 100%;
-    height: 400px; /* Adjust this value as needed */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+    
   .demo-video, .demo-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .example-description {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .example-description h4 {
-    color: rgb(140, 21, 21);
-    margin-bottom: 10px;
   }
   
   .quick-glance-video, .quick-glance-image {
@@ -1133,28 +1191,18 @@
   
   .quick-glance-player, .quick-glance-img {
     width: 100%;
-    height: 600px; /* Fixed height for media */
+    height: 600px; /* 保持电脑端的固定高度 */
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2px; /* Space between media and caption */
-  }
-  
-  .quick-glance-description {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .quick-glance-description h4 {
-    color: rgb(140, 21, 21);
-    margin-bottom: 10px;
+    margin-bottom: 2px;
   }
   
   .quick-glance-question {
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
     margin: 15px 0 25px;
-    font-weight: 500;  /* Add some weight but not as heavy as section title */
+    font-weight: 500;
   }
   
   .media-caption {
@@ -1205,5 +1253,651 @@
   :deep(.el-table__body td.el-table__cell) {
     padding: 12px 0;  /* Adjust cell padding */
   }
+  
+  /* 移动端适配 */
+  @media screen and (max-width: 768px) {
+    /* 导航栏调整 */
+    :deep(.el-menu-item) {
+      padding: 0 5px;  /* 减小导航项的内边距 */
+      font-size: 13px; /* 减小导航字体 */
+    }
+
+    /* 标题调整 */
+    .title {
+      font-size: 1.2em;  /* 减小标题字体 */
+      padding: 0;  /* 移除标题内边距 */
+      margin: 10px 0;  /* 保持上下间距 */
+    }
+
+    .subtitle {
+      font-size: 1em;  /* 减小副标题字体 */
+    }
+    .video-section-title {
+      margin: 0px;
+    }
+    /* 内容区域调整 */
+    .container {
+      padding: 0;  /* 移除容器内边距 */
+    }
+
+    /* 正文内容字体调整 */
+    p {
+      font-size: 14px;  /* 减小正文字体 */
+      line-height: 1.4;  /* 调整行高 */
+    }
+
+    /* 表格响应式处理 */
+    .el-table {
+      width: 100% !important;
+      font-size: 12px;
+    }
+
+    /* 栅格系统调整 */
+    .el-col {
+      width: 100% !important;
+      margin-bottom: 15px;  /* 减小列间距 */
+      padding: 0 !important;  /* 移除列内边距 */
+    }
+
+    .method-box h4 {
+      font-size: 15px;  /* 减小标题字体 */
+    }
+
+    .method-box {
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #f8f8f8;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    /* 列表样式调整 */
+    ul {
+      padding-left: 15px;  /* 减小列表缩进 */
+    }
+
+    li {
+      font-size: 13px;  /* 减小列表项字体 */
+      margin: 3px 0;  /* 减小列表项间距 */
+    }
+
+    /* 表格标题调整 */
+    .table-caption {
+      font-size: 12px;
+      width: 100%;  /* 让表格标题占满宽度 */
+      padding: 0 5px;  /* 添加小边距 */
+    }
+
+    /* 视频和图片容器调整 */
+    .video-section {
+      margin: 10px 0;
+    }
+
+    .video-option-header {
+      font-size: 13px;
+      padding: 8px;
+    }
+
+    .video-option-item {
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .model-name {
+      font-size: 13px;
+    }
+
+    .question {
+      font-size: 12px;
+    }
+
+    /* 媒体说明文字调整 */
+    .media-caption {
+      font-size: 12px;
+      padding: 5px;
+      width: 100%;
+    }
+
+    /* section标题调整 */
+    .section-title {
+      font-size: 18px;
+    }
+
+    /* 实验结果标题调整 */
+    .section-content h4 {
+      font-size: 1em;
+      margin: 10px 0 5px;
+    }
+
+    /* 调整段落间距 */
+    p {
+      margin: 0.5rem 0;  /* 减小段落间距 */
+    }
+
+    /* Project Code按钮和下面内容的间距 */
+    .github-link-container {
+      margin: 0px 0;  /* 减小按钮的上下间距 */
+    }
+
+    /* 调整表格内部间距 */
+    :deep(.el-table__cell) {
+      padding: 0px 0px;  /* 减小单元格内边距 */
+    }
+
+    /* 调整表格和标题的间距 */
+    .table-caption {
+      margin: 3px 0 8px;  /* 减小表格标题的间距 */
+    }
+
+    /* 调整列表的间距 */
+    ul {
+      margin: 4px 0;     /* 减小列表外边距 */
+      padding-left: 12px; /* 减小列表缩进 */
+    }
+
+    li {
+      margin: 2px 0;     /* 减小列表项间距 */
+    }
+
+    /* 调整标题层级的间距 */
+    h4 {
+      margin: 8px 0 4px; /* 减小h4标题的间距 */
+    }
+
+    /* 调整视频选择器的间距 */
+    .video-section {
+      margin: 8px 0;     /* 减小视频区域的外边距 */
+    }
+
+    .video-option-item {
+      padding: 6px 8px;  /* 减小选项的内边距 */
+    }
+
+    /* 调整图片容器的间距 */
+    .quick-glance-video,
+    .quick-glance-image {
+      margin-bottom: 0px; /* 减小图片容器下边距 */
+    }
+
+    /* 调整媒体说明文字的间距 */
+    .media-caption {
+      margin-top: 3px;    /* 减小说明文字的上边距 */
+      padding: 3px 5px;   /* 减小说明文字的内边距 */
+    }
+
+    /* 调整栅格系统的间距 */
+    .el-row {
+      margin-bottom: 8px !important; /* 减小行间距 */
+    }
+
+    .el-col {
+      margin-bottom: 8px;  /* 减小列间距 */
+    }
+
+    /* 调整实验结果部分的间距 */
+    .section-content h4 + p {
+      margin: 3px 0 6px;  /* 减小标题和描述文字的间距 */
+    }
+
+    /* 调整表格组的间距 */
+    .el-table {
+      margin: 5px 0;      /* 减小表格的外边距 */
+    }
+
+    /* 调整图片的间距 */
+    .method-image {
+      margin-top: 5px;    /* 减小图片的上边距 */
+    }
+
+    /* 调整abstract部分的间距 */
+    #abstract .section-content {
+      margin-top: 5px;    /* 减小abstract内容的上边距 */
+    }
+
+    /* 调整container的间距 */
+    .container {
+      margin-bottom: 10px; /* 减小容器的下边距 */
+    }
+
+    /* 调整main-content的间距 */
+    .main-content {
+      margin-bottom: 0px;
+    }
+
+    .main-content .section:first-of-type {
+      margin-top: 0px;
+    }
+
+  }
+
+  /* 添加平板设备的媒体查询 */
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container {
+      padding: 0 15px;
+    }
+
+    .title {
+      font-size: 1.8em;
+    }
+
+    .video-player {
+      height: 500px;
+    }
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .method-box {
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  /* 添加触摸设备的交互优化 */
+  @media (hover: none) {
+    .video-option-item {
+      padding: 1rem;
+    }
+
+    .github-button {
+      padding: 12px 20px;
+    }
+  }
+
+  /* 添加新的样式 */
+  .abstract-row {
+    padding: 0 90px; /* 在电脑端加左右边距 */
+  }
+
+  /* 移动端取消边距并确保对齐 */
+  @media (max-width: 768px) {
+    .abstract-row {
+      padding: 0 10px;
+      margin: 0 -10px;
+    }
+    
+    .abstract-col {
+      padding: 0 10px;
+    }
+  }
+
+  /* 修改移动端的容边距 */
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 0 10px;
+    }
+
+    /* 添加移动端视频和图片的高度设置 */
+    .quick-glance-player, .quick-glance-img {
+      height: auto; /* 移动端使用自适应高度 */
+      max-height: none;
+      /*边距为0*/
+      margin: 0;
+    }
+
+    /* 减小 section 标题的大小 */
+    .section-title {
+      font-size: 18px;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+    }
+
+    /* 调整 abstract-row 的边距以匹配新的容器边距 */
+    .abstract-row {
+      padding: 0 10px;
+      margin: 0 -10px;
+    }
+    
+    .abstract-col {
+      padding: 0 10px;
+    }
+
+    /* 调整移��端视频部分的边距 */
+    .mobile-video-section {
+      padding: 0 15px;
+      margin: 0 0 20px 0;
+    }
+  }
+
+  /* Desktop/Mobile visibility control */
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  @media screen and (min-width: 769px) {
+    .desktop-only {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .mobile-only {
+      display: block;
+    }
+  }
+
+  /* Mobile Video Section Styles */
+  .mobile-video-section {
+    padding: 0 15px;
+    margin: 0 0 20px 0;
+    position: relative;
+  }
+
+  .mobile-video-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+    padding: 0; /* Remove any padding that might affect the video */
+  }
+
+  .mobile-selector-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .selector-expanded {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-video-content {
+    padding-top: 60px; /* Space for the selector */
+  }
+
+  .mobile-selector-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(140, 21, 21);
+  }
+
+  .mobile-model-list {
+    background: #fff;
+  }
+
+  .mobile-model-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-model-item:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-model-item.active {
+    color: rgb(140, 21, 21);
+    font-weight: 500;
+  }
+
+  .mobile-question-display {
+    margin: 0;
+    padding: 15px;
+    background-color: #f8f8f8;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-question-display.has-question {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-question-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .has-question .mobile-question-text {
+    color: #333;
+    font-weight: 500;
+  }
+
+  .mobile-video-player {
+    padding: 15px;
+    width: 100%;
+    background: #fff;
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+  }
+
+  .mobile-demo-video {
+    width: 100%;
+    max-width: 100%; /* Ensure video doesn't overflow */
+    border-radius: 8px;
+    background: #f8f8f8;
+    display: block; /* Remove any potential inline spacing */
+  }
+
+  /* Ensure video container takes full width */
+  .mobile-video-player video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .video-placeholder {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
+    border-radius: 8px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  /* Override element-plus collapse styles for mobile */
+  :deep(.el-collapse) {
+    border: none;
+  }
+
+  :deep(.el-collapse-item__header) {
+    background-color: #fff;
+    padding: 15px;
+    border: none;
+    font-size: 16px;
+    height: auto;
+    line-height: 1.4;
+  }
+
+  :deep(.el-collapse-item__content) {
+    padding: 0;
+    background-color: #fff;
+  }
+
+  :deep(.el-collapse-item__wrap) {
+    border: none;
+  }
+
+  :deep(.el-collapse-item__arrow) {
+    margin-right: 4px;
+  }
+
+  /* Mobile Video Section Styles */
+  .mobile-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobile-selector-hint {
+    font-size: 12px;
+    color: #999;
+    font-weight: normal;
+  }
+  /* 只在移动端修改高度设置 */
+  @media screen and (max-width: 768px) {
+    .quick-glance-player, .quick-glance-img {
+      height: auto; /* 移动端使用自适应高度 */
+      max-height: none;
+      /*边距为0*/
+      margin: 0;
+    }
+  }
+  
+  /* 移动端表格样式优化 */
+  @media screen and (max-width: 768px) {
+    /* 调整表格整体样式 */
+    :deep(.el-table) {
+      font-size: 10px !important;
+      line-height: 1.1 !important;
+    }
+
+    /* 调整表格单元格内边距 */
+    :deep(.el-table__cell) {
+      padding: 2px 1px !important;
+    }
+
+    /* 调整表头样式 */
+    :deep(.el-table__header-wrapper th.el-table__cell) {
+      padding: 2px 1px !important;
+      height: 28px !important; /* 稍微增加表头高度以适应换行 */
+      line-height: 1.1 !important;
+    }
+
+    /* 调整表格行高 */
+    :deep(.el-table__row) {
+      height: auto !important; /* 允许自动调整高度 */
+      min-height: 24px !important; /* 设置最小高度 */
+    }
+
+    /* 调整表格内容区域 */
+    :deep(.el-table__body td.el-table__cell) {
+      height: auto !important; /* 允许自动调整高度 */
+      min-height: 24px !important;
+    }
+
+    /* 调整表格内容区域的行高和换行 */
+    :deep(.el-table__cell .cell) {
+      line-height: 1.1 !important;
+      white-space: normal !important; /* 允许换行 */
+      overflow: visible !important;
+      text-overflow: clip !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important; /* 最多显示2行 */
+      -webkit-box-orient: vertical !important;
+      padding: 2px 0 !important;
+    }
+
+    /* 为模型名称列特殊处理 */
+    :deep(.el-table__cell:first-child .cell) {
+      white-space: normal !important;
+      word-break: break-word !important;
+    }
+
+    /* 为数字列特殊处理 */
+    :deep(.el-table__cell:not(:first-child) .cell) {
+      white-space: nowrap !important; /* 数字列保持不换行 */
+    }
+
+    /* 调整表格外边距 */
+    .el-table {
+      margin: 4px 0 !important;
+    }
+
+    /* 调整表格标题样式 */
+    .table-caption {
+      font-size: 10px !important;
+      margin: 2px 0 4px !important;
+      line-height: 1.2 !important;
+    }
+
+    /* 调整带有额外间距的表格标题 */
+    .table-caption-with-spacing {
+      margin-bottom: 12px !important;
+    }
+
+    /* 优化表格内的粗体文本 */
+    :deep(.el-table__row .bold-text) {
+      font-weight: 500 !important;
+    }
+
+    /* 优化表格边框 */
+    :deep(.el-table__header-wrapper th.el-table__cell) {
+      border-bottom: 1px solid #ccc !important;
+    }
+
+    /* 调整特殊边框样式 */
+    #mitigate-table :deep(.el-table__row:nth-child(3)) td,
+    #mitigate-table :deep(.el-table__row:nth-child(6)) td,
+    #generalize-table :deep(.el-table__row:nth-child(2)) td,
+    #generalize-table :deep(.el-table__row:nth-child(4)) td,
+    #generalize-table :deep(.el-table__row:nth-child(6)) td,
+    #generalize-table :deep(.el-table__row:nth-child(8)) td,
+    #generalize-table :deep(.el-table__row:nth-child(10)) td {
+      border-bottom: 1px solid #ccc !important;
+    }
+
+    /* 调整表格内部的垂直对齐 */
+    :deep(.el-table__cell) {
+      vertical-align: middle !important;
+    }
+
+    /* 确保表格不会有横向滚动 */
+    :deep(.el-table__body-wrapper) {
+      overflow-x: hidden !important;
+    }
+
+    /* 优化表格内数字的显示 */
+    :deep(.el-table__cell) {
+      font-variant-numeric: tabular-nums !important;
+    }
+  }
+  
+  /* 修改 observation box 的移动端样式 */
+  @media screen and (max-width: 768px) {
+    .observation-box {
+      margin: 0px -10px;  /* 减小上下外边距为8px，左右为3px */
+      padding: 6px 6px;  /* 减小内边距 */
+      font-size: 14px;  /* 减小字体大小 */
+      line-height: 1.3;  /* 减小行高 */
+      border-left: 3px solid rgb(140, 21, 21);  /* 减小左边框宽度 */
+    }
+
+    /* 调整 observation box 内的加粗文本 */
+    .observation-box strong {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  
+  /* 在现有的 <style scoped> 中添加或修改以下样式 */
+
+  /* 默认样式(电脑端) */
+  .responsive-image {
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 8px;
+  }
+
+  /* 特定图片的宽度控制 */
+  img[alt="Question Repeating"] {
+    width: 80%;
+  }
+
+  /* 移动端样式覆盖 */
+  @media screen and (max-width: 768px) {
+    img[alt="Question Repeating"] {
+      width: 100%;
+      margin: 5px 0; /* 调整移动端的边距 */
+    }
+  }
+  
   </style>
   
