@@ -27,11 +27,16 @@
           (X-ISC)
         </h4>
         
-        <!-- <div class="author-info">
-          <span>Anonymous submission</span>
-        </div> -->
+        <div class="author-info">
+          <div class="authors">
+            <span>Qingjie Zhang<sup>1</sup>, Han Qiu<sup>1</sup>, Di Wang<sup>1</sup>, Haoting Qian<sup>1</sup>, Yiming Li<sup>2</sup>, Tianwei Zhang<sup>2</sup>, Minlie Huang<sup>1</sup></span>
+          </div>
+          <div class="affiliations">
+            <span><sup>1</sup>Tsinghua University, <sup>2</sup>Nanyang Technological University</span>
+          </div>
+        </div>
   
-        <!-- 添加 GitHub 链接按钮 -->
+        <!-- GitHub and Paper Links -->
         <div class="github-link-container">
           <a href="https://github.com/qingjiesjtu/USC" 
              class="github-button"
@@ -41,7 +46,18 @@
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
               </svg>
             </i>
-            <span>Project Code</span>
+            <span>Code</span>
+          </a>
+          <a href="https://arxiv.org/abs/2412.14959" 
+             class="github-button paper-button"
+             target="_blank">
+            <i class="paper-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
+                <path d="M4.5 10.5A.5.5 0 0 1 5 10h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 8h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm0-2A.5.5 0 0 1 5 4h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </i>
+            <span>Paper</span>
           </a>
         </div>
       </div>
@@ -488,10 +504,11 @@
               </h3>
               <div class="section-content">
                 <p>
-                  Access our code repository through the following links:
+                  Access our code repository and paper through the following links:
                 </p>
                 <ul>
-                  <li><a href="https://github.com/qingjiesjtu/USC" target="_blank">Project Code</a></li>
+                  <li><a href="https://github.com/qingjiesjtu/USC" target="_blank">Code</a></li>
+                  <li><a href="https://arxiv.org/abs/2412.14959" target="_blank">Paper</a></li>
                 </ul>
               </div>
             </div>
@@ -876,6 +893,9 @@
   .github-link-container {
     text-align: center;
     margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 增加按钮之间的间距 */
   }
   
   .github-button {
@@ -884,11 +904,13 @@
     gap: 8px;
     background-color: rgb(140, 21, 21);
     color: white;
-    padding: 8px 15px;
+    padding: 8px 15px; /* 增加水平内边距 */
+    min-width: 100px; /* 添加最小宽度 */
     border-radius: 20px;
     text-decoration: none;
     font-size: 14px;
     transition: background-color 0.3s;
+    justify-content: center; /* 确保内容居中 */
   }
   
   .github-button:hover {
@@ -897,7 +919,7 @@
     text-decoration: none;
   }
   
-  .github-icon {
+  .github-icon, .paper-icon {
     display: flex;
     align-items: center;
   }
@@ -1552,7 +1574,7 @@
       padding: 0 10px;
     }
 
-    /* 调整移��端视频部分的边距 */
+    /* 调整移动端视频部分的边距 */
     .mobile-video-section {
       padding: 0 15px;
       margin: 0 0 20px 0;
@@ -1899,5 +1921,52 @@
     }
   }
   
+  /* 在 <style scoped> 中添加样式 */
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+  }
+
+  .authors {
+    font-size: 1em;
+  }
+
+  .affiliations {
+    font-size: 1em;
+    color: #333;
+  }
+
+  /* 移动端适配 */
+  @media screen and (max-width: 768px) {
+    .authors {
+      font-size: 0.85em;
+    }
+    
+    .affiliations {
+      font-size: 0.85em;
+    }
+  }
+  /* 在移动端媒体查询中添加按钮样式 */
+@media screen and (max-width: 768px) {
+  .github-button {
+    padding: 6px 12px; /* 减小内边距 */
+    min-width: 80px; /* 减小最小宽度 */
+    font-size: 12px; /* 减小字体大小 */
+    gap: 4px; /* 减小图标和文字的间距 */
+  }
+
+  .github-link-container {
+    gap: 12px; /* 减小按钮之间的间距 */
+  }
+
+  /* 调整图标大小 */
+  .github-icon svg, .paper-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+}
   </style>
   
